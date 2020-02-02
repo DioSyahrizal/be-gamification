@@ -1,16 +1,9 @@
-import mysql from "mysql";
+const Sequelize = require("sequelize");
 
-const connection = mysql.connection({
-  host: "localhost",
-  user: "root",
-  password: "1234",
-  database: "db_gamifikasi"
+export const sequelize = new Sequelize("db_gamification", "root", "1234", {
+  dialect: "mysql",
+  port: 3306,
+  host: "localhost"
 });
 
-connection.connect((err: Error) => {
-  if (err) {
-    throw err;
-  }
-});
-
-export default connection;
+sequelize.authenticate();

@@ -1,25 +1,37 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import { userRouter } from "./router/user.router";
+import { tokenGuard } from "./middleware/tokenguard";
+
+dotenv.config();
 const app = express();
 
-let counter = [
-  {
-    id: "a1",
-    val: 10
-  },
-  {
-    id: "a2",
-    val: 11
-  }
-];
+const port = process.env.PORT;
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-app.use(express.json());
 
-app.get("/", (_req: Request, res: Response) => {
-  res.json(counter);
-});
+app.use("/", userRouter);
 
-app.listen(5000, () => {
-  console.log("server running");
+app.get(
+  "/some-resource",
+  (_req: Request, res: Response, _next: NextFunction) => {
+    res.json("Hello World");
+  }
+);
+app.use(tokenGuard());
+
+// Protected Get
+app.get(
+  "/some-protected-resource",
+  (_req: Request, res: Response, _next: NextFunction) => {
+    res.json("Protected Hello World");
+  }
+);
+
+app.listen(port, () => {
+  console.log(`server running at port ${port}`);
 });
