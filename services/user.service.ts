@@ -18,7 +18,7 @@ export class UserService {
   }
 
   async register({ email, password }: UserAddModel) {
-    return User.findOne({ where: { email } }).then((u: any) => {
+    User.findOne({ where: { email } }).then((u: any) => {
       if (u !== null) {
         return { status: 400 };
       } else {
@@ -26,12 +26,13 @@ export class UserService {
           if (err) {
             return console.error("There was an error ", err);
           } else {
-            bcrypt.hash(password, salt).then(hash => {
-              return User.create({
+            bcrypt.hash(password, salt).then(async hash => {
+              await User.create({
                 id: uuid.v4(),
                 email: email,
                 password: hash
               }).then((u: any) => {
+                console.dir(u.dataValues);
                 return { data: u.dataValues };
               });
             });
