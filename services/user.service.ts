@@ -45,7 +45,9 @@ export class UserService {
   async login({ email }: any) {
     return User.findOne({ where: { email } }).then((u: UserViewModel) => {
       const { id, email } = u!;
-      return { token: jwt.sign({ id, email }, this._jwtsecret) };
+      return {
+        token: jwt.sign({ id, email }, this._jwtsecret, { expiresIn: "2d" })
+      };
     });
   }
 
