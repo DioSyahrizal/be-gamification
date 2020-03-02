@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import Bluebird from "bluebird";
-import { User, UserAddModel, UserViewModel } from "../models/users";
+
+import { User, UserAddModel } from "../models/users";
 import uuid from "uuid";
 
 export class UserService {
@@ -43,7 +43,7 @@ export class UserService {
   }
 
   async login({ email }: any) {
-    return User.findOne({ where: { email } }).then((u: UserViewModel) => {
+    return User.findOne({ where: { email } }).then(u => {
       const { id, email } = u!;
       return {
         token: jwt.sign({ id, email }, this._jwtsecret, { expiresIn: "2d" })
@@ -65,9 +65,9 @@ export class UserService {
     }) as Promise<boolean>;
   }
 
-  getUserById(id: string) {
-    return User.findById(id, {
-      attributes: UserService.userAttribute
-    }) as Bluebird<UserViewModel>;
-  }
+  // getUserById(id: string) {
+  //   return User.findById(id, {
+  //     attributes: UserService.userAttribute
+  //   }) as Bluebird<UserViewModel>;
+  // }
 }
