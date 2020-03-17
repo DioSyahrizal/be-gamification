@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import { userRouter } from "./router/user.router";
 import { tokenGuard } from "./middleware/tokenguard";
+import { soalRouter } from "./router/soal.router";
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/", userRouter);
+app.use("/soal", soalRouter);
 
 app.get(
   "/some-resource",

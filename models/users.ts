@@ -37,3 +37,5 @@ User.init(
   },
   { sequelize, tableName: "users", timestamps: false }
 );
+
+// User.hasOne(Point, { foreignKey: "id" });

@@ -29,8 +29,8 @@ userRouter.post("/register", async (req: Request, res: Response) => {
           bcrypt.hash(password, salt).then(hash => {
             User.create({
               id: uuid.v4(),
-              username,
               name,
+              username,
               email,
               password: hash,
               address,
@@ -63,22 +63,15 @@ userRouter.post("/login", (req: Request, res: Response) => {
           id: id,
           email: email
         };
-        jwt.sign(
-          payload,
-          _jwtsecret,
-          {
-            expiresIn: "2d"
-          },
-          (err, token) => {
-            if (err) console.error("There is some error in token", err);
-            else {
-              res.json({
-                success: true,
-                token: `Bearer ${token}`
-              });
-            }
+        jwt.sign(payload, _jwtsecret, (err, token) => {
+          if (err) console.error("There is some error in token", err);
+          else {
+            res.json({
+              success: true,
+              token: `Bearer ${token}`
+            });
           }
-        );
+        });
       } else {
         res.status(400).json({ errors: "email or password is invalid" });
       }
