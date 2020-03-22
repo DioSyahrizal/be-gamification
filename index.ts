@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import { userRouter } from "./router/user.router";
 import { tokenGuard } from "./middleware/tokenguard";
 import { soalRouter } from "./router/soal.router";
+import { quizRouter } from "./router/quiz.router";
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors());
 
 app.use("/", userRouter);
 app.use("/soal", soalRouter);
+app.use("/quiz", quizRouter);
 
 app.get(
   "/some-resource",

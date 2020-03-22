@@ -56,26 +56,30 @@ userRouter.post("/login", (req: Request, res: Response) => {
   const payload = { email: req.body.email, password: req.body.password };
 
   User.findOne({ where: { email: payload.email } }).then((user: any) => {
-    const { id, email, password } = user!;
-    bcrypt.compare(payload.password, password).then(isMatch => {
-      if (isMatch) {
-        const payload = {
-          id: id,
-          email: email
-        };
-        jwt.sign(payload, _jwtsecret, (err, token) => {
-          if (err) console.error("There is some error in token", err);
-          else {
-            res.json({
-              success: true,
-              token: `Bearer ${token}`
-            });
-          }
-        });
-      } else {
-        res.status(400).json({ errors: "email or password is invalid" });
-      }
-    });
+    if (user) {
+      const { id, email, password } = user;
+      bcrypt.compare(payload.password, password).then(isMatch => {
+        if (isMatch) {
+          const payload = {
+            id: id,
+            email: email
+          };
+          jwt.sign(payload, _jwtsecret, (err, token) => {
+            if (err) console.error("There is some error in token", err);
+            else {
+              res.json({
+                success: true,
+                token: `Bearer ${token}`
+              });
+            }
+          });
+        } else {
+          res.status(400).json({ errors: "email or password is invalid" });
+        }
+      });
+    } else {
+      res.status(400).json({ errors: "email or password is invalid" });
+    }
   });
 });
 
