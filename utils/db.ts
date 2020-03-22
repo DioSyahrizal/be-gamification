@@ -1,16 +1,14 @@
-import mysql from "mysql";
+import { Sequelize } from "sequelize";
 
-const connection = mysql.connection({
-  host: "localhost",
-  user: "root",
-  password: "1234",
-  database: "db_gamifikasi"
-});
+const { DB, DB_USER, DB_PASSWORD } = process.env;
+const config = {
+  dialect: "mariadb",
+  port: 3306,
+  host: "localhost"
+};
 
-connection.connect((err: Error) => {
-  if (err) {
-    throw err;
-  }
-});
+export const sequelize = new Sequelize(
+  `${config.dialect}://${DB_USER}:${DB_PASSWORD}@${config.host}:${config.port}/${DB}`
+);
 
-export default connection;
+sequelize.authenticate();
