@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize";
 
-const { DB, DB_USER, DB_PASSWORD, HOST } = process.env;
+const { DB, DB_USER, DB_PASSWORD, HOST, DB_PORT } = process.env;
 const config = {
   dialect: "mariadb",
-  port: 3306,
+  port: DB_PORT,
   host: HOST
 };
 
