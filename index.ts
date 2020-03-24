@@ -2,6 +2,9 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import swaggerUi from "swagger-ui-express";
+
+import * as swaggerDocument from "./swagger.json";
 import { userRouter } from "./router/user.router";
 import { tokenGuard } from "./middleware/tokenguard";
 import { soalRouter } from "./router/soal.router";
@@ -19,6 +22,7 @@ app.use(cors());
 app.use("/", userRouter);
 app.use("/soal", soalRouter);
 app.use("/quiz", quizRouter);
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get(
   "/some-resource",
