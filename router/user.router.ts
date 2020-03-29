@@ -68,8 +68,7 @@ userRouter.post("/login", (req: Request, res: Response) => {
             if (err) console.error("There is some error in token", err);
             else {
               res.json({
-                success: true,
-                token: `Bearer ${token}`
+                token: `${token}`
               });
             }
           });

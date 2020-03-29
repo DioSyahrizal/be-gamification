@@ -20,8 +20,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/", userRouter);
-app.use("/soal", soalRouter);
-app.use("/quiz", quizRouter);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get(
@@ -32,13 +30,9 @@ app.get(
 );
 app.use(tokenGuard());
 
-// Protected Get
-app.get(
-  "/some-protected-resource",
-  (_req: Request, res: Response, _next: NextFunction) => {
-    res.json("Protected Hello World");
-  }
-);
+// Protected ROUTE
+app.use("/soal", soalRouter);
+app.use("/quiz", quizRouter);
 
 app.listen(port, () => {
   console.log(`server running at port ${port}`);

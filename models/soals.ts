@@ -1,5 +1,6 @@
 import Sequelize, { Model } from "sequelize";
 import { sequelize } from "../utils/db";
+import { UserSoal } from "./users_soal";
 
 export class Soal extends Model {
   public id!: number;
@@ -30,4 +31,10 @@ Soal.init(
   { sequelize, tableName: "soal", timestamps: false }
 );
 
-// User.hasOne(Point, { foreignKey: "id" });
+Soal.hasMany(UserSoal, { foreignKey: "id" });
+
+// Soal.belongsToMany(User, {
+//   through: UserSoal,
+//   foreignKey: "id_soal",
+//   otherKey: " id_user"
+// });

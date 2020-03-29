@@ -22,4 +22,5 @@ UserSoal.init(
   { sequelize, tableName: "user_get_soal", timestamps: false }
 );
 
-// User.hasOne(Point, { foreignKey: "id" });
+// UserSoal.hasMany(Soal, { foreignKey: "id_soal" });
+// UserSoal.hasMany(User, { foreignKey: "id_user" });

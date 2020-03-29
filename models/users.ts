@@ -38,4 +38,8 @@ User.init(
   { sequelize, tableName: "users", timestamps: false }
 );
 
-// User.hasOne(Point, { foreignKey: "id" });
+// User.belongsToMany(Soal, {
+//   through: UserSoal,
+//   foreignKey: "id_user",
+//   otherKey: "id_soal"
+// });
