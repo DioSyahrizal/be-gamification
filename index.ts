@@ -1,14 +1,15 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
 
-import * as swaggerDocument from "./swagger.json";
+import swaggerDocument from "./swagger";
 import { userRouter } from "./router/user.router";
 import { tokenGuard } from "./middleware/tokenguard";
 import { soalRouter } from "./router/soal.router";
 import { quizRouter } from "./router/quiz.router";
+import { menuRouter } from "./router/menu.router";
 
 dotenv.config();
 const app = express();
@@ -22,15 +23,10 @@ app.use(cors());
 app.use("/", userRouter);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.get(
-  "/some-resource",
-  (_req: Request, res: Response, _next: NextFunction) => {
-    res.json("Hello World");
-  }
-);
 app.use(tokenGuard());
 
 // Protected ROUTE
+app.use("/menu", menuRouter);
 app.use("/soal", soalRouter);
 app.use("/quiz", quizRouter);
 

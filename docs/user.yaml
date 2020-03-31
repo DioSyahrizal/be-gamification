@@ -1,0 +1,157 @@
+paths:
+  /user/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - User
+      summary: Get detail user
+      operationId: getDetailUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID User
+      responses:
+        200:
+          description: "Get detail user"
+          schema:
+            items:
+              $ref: "#/definitions/DetailUser"
+  /register:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - User
+      summary: Register user
+      operationId: registerUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: RegisterBody
+          description: Register User
+          required: true
+          schema:
+            $ref: "#/definitions/RegisterBody"
+      responses:
+        200:
+          description: "Return "
+          schema:
+            $ref: "#/definitions/Responses"
+
+  /login:
+    post:
+      tags:
+        - User
+      summary: Login User
+      operationId: loginUser
+      parameters:
+        - in: body
+          name: LoginBody
+          required: true
+          description: Login User
+          schema:
+            $ref: "#/definitions/Login"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: "Token"
+          schema:
+            $ref: "#/definitions/LoginRes"
+
+definitions:
+  DetailUser:
+    type: object
+    required:
+      - id
+      - username
+      - name
+      - email
+      - address
+      - point
+    properties:
+      id:
+        type: string
+        example: "asjkf-dfkngk-klsdmf-qoin3"
+      username:
+        type: string
+        example: "diosyah"
+      name:
+        type: string
+        example: "Dio Syahrizal"
+      email:
+        type: string
+        example: "dio@gmail.com"
+      address:
+        type: string
+        example: "Malang"
+      point:
+        type: interger
+        example: 2000
+
+  RegisterBody:
+    type: object
+    required:
+      - username
+      - password
+      - name
+      - address
+      - email
+    properties:
+      username:
+        type: string
+        example: "diosyahrizal"
+      password:
+        type: string
+        example: "abcdefg"
+      name:
+        type: string
+        example: "Dio Syahrizal"
+      email:
+        type: string
+        example: "dio@gmail.com"
+      address:
+        type: string
+        example: "Malang"
+
+  Responses:
+    type: object
+    properties:
+      status:
+        type: integer
+        example: 200
+      success:
+        type: boolean
+
+  Login:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+        example: "diosyah"
+      password:
+        type: string
+        example: "lallalala"
+
+  LoginRes:
+    type: object
+    properties:
+      token:
+        type: string
+        example: "eeaklcmlakndckjnakfr.LAKMDKSnkSNFLJSHNVSNV"

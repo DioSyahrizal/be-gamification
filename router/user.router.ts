@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator/check";
 
 import { User } from "../models/users";
+import { tokenGuard } from "../middleware/tokenguard";
 
 export const userRouter = Router();
 
@@ -82,7 +83,7 @@ userRouter.post("/login", (req: Request, res: Response) => {
   });
 });
 
-userRouter.get("/user/:id", (req: Request, res: Response) => {
+userRouter.get("/user/:id", tokenGuard(), (req: Request, res: Response) => {
   User.findOne({
     where: { id: req.params.id },
     attributes: { exclude: ["password"] }
