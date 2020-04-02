@@ -36,7 +36,7 @@ userRouter.post("/register", async (req: Request, res: Response) => {
               password: hash,
               address,
               point: 1000,
-              role: "admin"
+              role: "user"
             }).then(u => {
               console.dir(u);
               res.status(200).json({ status: 200, success: true });
