@@ -14,16 +14,43 @@ soalRouter.post("/add", async (req: Request, res: Response) => {
       opt3: "Aoksd",
       opt4: "asd3",
       answer: "Aaa",
-      level: " Hard"
+      level: "Easy"
     },
     {
-      question: "Dimana pertanyaanya ya?",
+      question: "Dimana kamu ya?",
       opt1: "Aduh",
       opt2: "Aaa",
       opt3: "Aoksd",
       opt4: "asd3",
       answer: "Aaa",
-      level: " Hard"
+      level: "Hard"
+    },
+    {
+      question: "Dimana dia ya?",
+      opt1: "Aduh",
+      opt2: "Aaa",
+      opt3: "Aoksd",
+      opt4: "asd3",
+      answer: "Aaa",
+      level: "Hard"
+    },
+    {
+      question: "Dimana semuanya ya?",
+      opt1: "Aduh",
+      opt2: "Aaa",
+      opt3: "Aoksd",
+      opt4: "asd3",
+      answer: "Aaa",
+      level: "Hard"
+    },
+    {
+      question: "Dimana yang lain ya?",
+      opt1: "Aduh",
+      opt2: "Aaa",
+      opt3: "Aoksd",
+      opt4: "asd3",
+      answer: "Aaa",
+      level: "Hard"
     }
   ]).then(soal => {
     console.dir(soal);

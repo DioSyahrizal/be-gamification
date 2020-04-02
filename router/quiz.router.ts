@@ -37,22 +37,24 @@ quizRouter.post("/easy", async (req: Request, res: Response) => {
 
 quizRouter.get("/easy", async (req: Request, res: Response) => {
   const { id_user } = req.body;
-  const [result] = await sequelize.query(
-    `SELECT s.*, g.id as id_soaluser, g.result FROM soal as s JOIN user_get_soal as g ON g.id_soal = s.id where g.id_user= :id AND s.level = :level`,
-    {
-      // A function (or false) for logging your queries
-      // Will get called for every SQL query that gets sent
-      // to the server.
-      replacements: { id: id_user, level: "Easy" },
-      logging: console.log,
-      // If plain is true, then sequelize will only return the first
-      // record of the result set. In case of false it will return all records.
-      plain: false,
-      // Set this to true if you don't have a model definition for your query.
-      raw: true
-    }
-  );
-  res.json(result);
+  const result: any = await sequelize
+    .query(
+      `SELECT s.*, g.id as id_soaluser, g.result FROM soal as s JOIN user_get_soal as g ON g.id_soal = s.id where g.id_user= :id AND s.level = :level`,
+      {
+        // A function (or false) for logging your queries
+        // Will get called for every SQL query that gets sent
+        // to the server.
+        replacements: { id: id_user, level: "Easy" },
+        logging: console.log,
+        // If plain is true, then sequelize will only return the first
+        // record of the result set. In case of false it will return all records.
+        plain: false,
+        // Set this to true if you don't have a model definition for your query.
+        raw: true
+      }
+    )
+    .catch(_error => res.json({ error: "Need a request body!" }));
+  res.json(result[0]);
 });
 
 quizRouter.put("/correction/", async (req: Request, res: Response) => {
