@@ -54,7 +54,7 @@ quizRouter.get("/easy", async (req: Request, res: Response) => {
       }
     )
     .catch(_error => res.json({ error: "Need a request body!" }));
-  res.json(result[0]);
+  res.json({ data: result[0] });
 });
 
 quizRouter.put("/correction/", async (req: Request, res: Response) => {

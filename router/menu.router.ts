@@ -5,5 +5,5 @@ export const menuRouter = Router();
 
 menuRouter.get("/:id", async (req: Request, res: Response) => {
   const id_user = req.body.params;
-  Menu.findAll({ where: id_user }).then(data => res.json(data));
+  Menu.findAll({ where: id_user }).then(data => res.json({ data: data }));
 });
