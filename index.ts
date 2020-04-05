@@ -17,8 +17,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+app.use("/public", express.static("public"));
 
 app.use("/", userRouter);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));

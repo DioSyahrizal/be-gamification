@@ -11,6 +11,7 @@ export class Soal extends Model {
   public opt4!: string;
   public answer!: string;
   public level!: string;
+  public image!: string;
 }
 
 Soal.init(
@@ -18,7 +19,7 @@ Soal.init(
     id: {
       type: Sequelize.NUMBER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     question: Sequelize.TEXT,
     opt1: Sequelize.STRING,
@@ -26,7 +27,8 @@ Soal.init(
     opt3: Sequelize.TEXT,
     opt4: Sequelize.TEXT,
     answer: Sequelize.TEXT,
-    level: Sequelize.STRING
+    level: Sequelize.STRING,
+    image: { type: Sequelize.STRING, allowNull: true },
   },
   { sequelize, tableName: "soal", timestamps: false }
 );

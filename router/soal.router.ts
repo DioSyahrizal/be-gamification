@@ -1,8 +1,51 @@
 import { Router, Request, Response } from "express";
+import multer from "multer";
+import uuid from "uuid";
 
 import { Soal } from "../models/soals";
 
 export const soalRouter = Router();
+
+const DIR = "./public/";
+
+const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => {
+    cb(null, DIR);
+  },
+  filename: (_req, file, cb) => {
+    const fileName = file.originalname.toLowerCase().split(" ").join("-");
+    cb(null, uuid.v4() + "-" + fileName);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+});
+
+soalRouter.post(
+  "/addsingle",
+  upload.single("profileImg"),
+  (req: Request, res: Response) => {
+    const { question, opt1, opt2, opt3, opt4, answer, level } = req.body;
+    Soal.create({
+      question: question,
+      opt1: opt1,
+      opt2: opt2,
+      opt3: opt3,
+      opt4: opt4,
+      answer: answer,
+      level: level,
+      image: req.file.filename,
+    })
+      .then((create) =>
+        res.status(200).json({ status: "success", data: create })
+      )
+      .catch((err) => {
+        res.status(500).json({ erorrs: err });
+      });
+  }
+);
 
 soalRouter.post("/add", async (req: Request, res: Response) => {
   const { data } = req.body;
@@ -14,7 +57,7 @@ soalRouter.post("/add", async (req: Request, res: Response) => {
       opt3: "Aoksd",
       opt4: "asd3",
       answer: "Aaa",
-      level: "Easy"
+      level: "Easy",
     },
     {
       question: "Dimana kamu ya?",
@@ -23,7 +66,7 @@ soalRouter.post("/add", async (req: Request, res: Response) => {
       opt3: "Aoksd",
       opt4: "asd3",
       answer: "Aaa",
-      level: "Hard"
+      level: "Hard",
     },
     {
       question: "Dimana dia ya?",
@@ -32,7 +75,7 @@ soalRouter.post("/add", async (req: Request, res: Response) => {
       opt3: "Aoksd",
       opt4: "asd3",
       answer: "Aaa",
-      level: "Hard"
+      level: "Hard",
     },
     {
       question: "Dimana semuanya ya?",
@@ -41,7 +84,7 @@ soalRouter.post("/add", async (req: Request, res: Response) => {
       opt3: "Aoksd",
       opt4: "asd3",
       answer: "Aaa",
-      level: "Hard"
+      level: "Hard",
     },
     {
       question: "Dimana yang lain ya?",
@@ -50,9 +93,9 @@ soalRouter.post("/add", async (req: Request, res: Response) => {
       opt3: "Aoksd",
       opt4: "asd3",
       answer: "Aaa",
-      level: "Hard"
-    }
-  ]).then(soal => {
+      level: "Hard",
+    },
+  ]).then((soal) => {
     console.dir(soal);
     console.dir(data);
     res.status(200).json({ status: 200, success: "Soal added!" });
@@ -60,15 +103,15 @@ soalRouter.post("/add", async (req: Request, res: Response) => {
 });
 
 soalRouter.get("/", async (_req: Request, res: Response) => {
-  Soal.findAll().then(soal => {
+  Soal.findAll().then((soal) => {
     res.status(200).json({ status: 200, data: soal });
   });
 });
 
 soalRouter.delete("/delete/:id", async (req: Request, res: Response) => {
-  Soal.findOne({ where: { id: req.params.id } }).then(soal => {
+  Soal.findOne({ where: { id: req.params.id } }).then((soal) => {
     if (soal) {
-      Soal.destroy({ where: { id: req.params.id } }).then(deleted => {
+      Soal.destroy({ where: { id: req.params.id } }).then((deleted) => {
         console.dir(deleted);
         res.status(200).json({ status: 200, success: "Soal deleted!" });
       });
