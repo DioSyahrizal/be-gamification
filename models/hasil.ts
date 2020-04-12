@@ -1,29 +1,27 @@
 import Sequelize, { Model } from "sequelize";
 import { sequelize } from "../utils/db";
 
-export class UserSoal extends Model {
+export class Hasil extends Model {
   public id!: number;
   public id_user!: string;
-  public id_soal!: string;
-  public result!: string;
-  public matpel!: string;
   public level!: string;
+  public matpel!: string;
+  public nilai!: number;
 }
 
-UserSoal.init(
+Hasil.init(
   {
     id: {
       type: Sequelize.NUMBER,
       primaryKey: true,
       autoIncrement: true,
     },
-    id_user: Sequelize.TEXT,
-    id_soal: Sequelize.STRING,
-    result: Sequelize.TEXT,
-    matpel: Sequelize.STRING,
+    id_user: Sequelize.STRING,
     level: Sequelize.STRING,
+    matpel: Sequelize.STRING,
+    nilai: Sequelize.BIGINT,
   },
-  { sequelize, tableName: "user_get_soal", timestamps: false }
+  { sequelize, tableName: "hasil", timestamps: false }
 );
 
 // UserSoal.hasMany(Soal, { foreignKey: "id_soal" });

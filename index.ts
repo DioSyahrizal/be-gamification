@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
+import Pusher from "pusher";
 
 import swaggerDocument from "./swagger";
 import { userRouter } from "./router/user.router";
@@ -13,6 +14,14 @@ import { menuRouter } from "./router/menu.router";
 
 dotenv.config();
 const app = express();
+
+export const pusher = new Pusher({
+  appId: "967809",
+  key: "9ce3c8a195d350f6ff35",
+  secret: "5ba29942044e37f4cb4e",
+  cluster: "ap1",
+  encrypted: true,
+});
 
 const port = process.env.PORT || 5000;
 

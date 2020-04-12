@@ -1,51 +1,59 @@
 import { Router, Request, Response } from "express";
-import multer from "multer";
-import uuid from "uuid";
+// import multer from "multer";
+// import uuid from "uuid";
 
 import { Soal } from "../models/soals";
 
 export const soalRouter = Router();
 
-const DIR = "./public/";
+// const DIR = "./public/";
 
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => {
-    cb(null, DIR);
-  },
-  filename: (_req, file, cb) => {
-    const fileName = file.originalname.toLowerCase().split(" ").join("-");
-    cb(null, uuid.v4() + "-" + fileName);
-  },
+// const storage = multer.diskStorage({
+//   destination: (_req, _file, cb) => {
+//     cb(null, DIR);
+//   },
+//   filename: (_req, file, cb) => {
+//     const fileName = file.originalname.toLowerCase().split(" ").join("-");
+//     cb(null, uuid.v4() + "-" + fileName);
+//   },
+// });
+
+// const upload = multer({
+//   storage: storage,
+//   limits: { fileSize: 1000000 },
+// });
+
+soalRouter.post("/addsingle", (req: Request, res: Response) => {
+  // const encoded = `data:${
+  //   req.file.mimetype
+  // };base64,${req.file.buffer.toString("base64")}`;
+  const {
+    question,
+    opt1,
+    opt2,
+    opt3,
+    opt4,
+    answer,
+    level,
+    matpel,
+    profileImg,
+  } = req.body;
+  Soal.create({
+    question: question,
+    opt1: opt1,
+    opt2: opt2,
+    opt3: opt3,
+    opt4: opt4,
+    answer: answer,
+    level: level,
+    matpel: matpel,
+    image: profileImg,
+  })
+    .then((create) => res.status(200).json({ status: "success", data: create }))
+    .catch((err) => {
+      res.status(500).json({ erorrs: err });
+    });
 });
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1000000 },
-});
-
-soalRouter.post(
-  "/addsingle",
-  upload.single("profileImg"),
-  (req: Request, res: Response) => {
-    const { question, opt1, opt2, opt3, opt4, answer, level } = req.body;
-    Soal.create({
-      question: question,
-      opt1: opt1,
-      opt2: opt2,
-      opt3: opt3,
-      opt4: opt4,
-      answer: answer,
-      level: level,
-      image: req.file.filename,
-    })
-      .then((create) =>
-        res.status(200).json({ status: "success", data: create })
-      )
-      .catch((err) => {
-        res.status(500).json({ erorrs: err });
-      });
-  }
-);
 
 soalRouter.post("/add", async (req: Request, res: Response) => {
   const { data } = req.body;

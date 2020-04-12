@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator/check";
 
 import { User } from "../models/users";
+import { Coin } from "../models/coin";
 import { tokenGuard } from "../middleware/tokenguard";
 
 export const userRouter = Router();
@@ -19,7 +20,7 @@ userRouter.post("/register", async (req: Request, res: Response) => {
 
   const { email, password, username, name, address } = req.body;
 
-  User.findOne({ where: { email } }).then(u => {
+  User.findOne({ where: { email } }).then((u) => {
     if (u !== null) {
       res.status(400).json({ status: 400, message: "email already taken" });
     } else {
@@ -27,7 +28,7 @@ userRouter.post("/register", async (req: Request, res: Response) => {
         if (err) {
           res.status(400).json({ status: 400, message: err.message });
         } else {
-          bcrypt.hash(password, salt).then(hash => {
+          bcrypt.hash(password, salt).then((hash) => {
             User.create({
               id: uuid.v4(),
               name,
@@ -36,8 +37,8 @@ userRouter.post("/register", async (req: Request, res: Response) => {
               password: hash,
               address,
               point: 1000,
-              role: "user"
-            }).then(u => {
+              role: "user",
+            }).then((u) => {
               console.dir(u);
               res.status(200).json({ status: 200, success: true });
             });
@@ -60,17 +61,17 @@ userRouter.post("/login", (req: Request, res: Response) => {
   User.findOne({ where: { email: payload.email } }).then((user: any) => {
     if (user) {
       const { id, email, password } = user;
-      bcrypt.compare(payload.password, password).then(isMatch => {
+      bcrypt.compare(payload.password, password).then((isMatch) => {
         if (isMatch) {
           const payload = {
             id: id,
-            email: email
+            email: email,
           };
           jwt.sign(payload, _jwtsecret, (err, token) => {
             if (err) console.error("There is some error in token", err);
             else {
               res.json({
-                token: `${token}`
+                token: `${token}`,
               });
             }
           });
@@ -87,12 +88,19 @@ userRouter.post("/login", (req: Request, res: Response) => {
 userRouter.get("/user/:id", tokenGuard(), (req: Request, res: Response) => {
   User.findOne({
     where: { id: req.params.id },
-    attributes: { exclude: ["password"] }
-  }).then(user => {
+    attributes: { exclude: ["password"] },
+  }).then((user) => {
     if (user) {
       res.json({ data: user });
     } else {
       res.json({ error: "User not found!" });
     }
   });
+});
+
+userRouter.get("/score", tokenGuard(), (req: Request, res: Response) => {
+  const { id_user } = req.query;
+  Coin.findOne({ where: { id: id_user } }).then((data) =>
+    res.status(200).json(data)
+  );
 });

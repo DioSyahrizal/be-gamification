@@ -1,16 +1,13 @@
 import Sequelize, { Model } from "sequelize";
 import { sequelize } from "../utils/db";
 
-export class UserSoal extends Model {
+export class BadgeUser extends Model {
   public id!: number;
   public id_user!: string;
-  public id_soal!: string;
-  public result!: string;
-  public matpel!: string;
-  public level!: string;
+  public id_badge!: number;
 }
 
-UserSoal.init(
+BadgeUser.init(
   {
     id: {
       type: Sequelize.NUMBER,
@@ -18,12 +15,9 @@ UserSoal.init(
       autoIncrement: true,
     },
     id_user: Sequelize.TEXT,
-    id_soal: Sequelize.STRING,
-    result: Sequelize.TEXT,
-    matpel: Sequelize.STRING,
-    level: Sequelize.STRING,
+    id_badge: Sequelize.NUMBER,
   },
-  { sequelize, tableName: "user_get_soal", timestamps: false }
+  { sequelize, tableName: "user_badges", timestamps: false }
 );
 
 // UserSoal.hasMany(Soal, { foreignKey: "id_soal" });

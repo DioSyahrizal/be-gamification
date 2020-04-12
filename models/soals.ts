@@ -12,6 +12,7 @@ export class Soal extends Model {
   public answer!: string;
   public level!: string;
   public image!: string;
+  public matpel!: string;
 }
 
 Soal.init(
@@ -29,6 +30,7 @@ Soal.init(
     answer: Sequelize.TEXT,
     level: Sequelize.STRING,
     image: { type: Sequelize.STRING, allowNull: true },
+    matpel: { type: Sequelize.ENUM, values: ["fisika", "kimia"] },
   },
   { sequelize, tableName: "soal", timestamps: false }
 );
