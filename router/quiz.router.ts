@@ -130,3 +130,23 @@ quizRouter.post("/score", async (req: Request, res: Response) => {
     });
   });
 });
+
+quizRouter.get("/progress", async (req: Request, res: Response) => {
+  const { id_user, matpel } = req.query;
+
+  const result: any = await sequelize
+    .query(
+      `SELECT SUM(IF(result IS NOT NULL AND level = 'Easy' ,1,0)) as easy,
+              SUM(IF(result IS NOT NULL AND level = 'Medium' ,1,0)) as med,
+              SUM(IF(result IS NOT NULL AND level = 'Hard' ,1,0)) as hard
+               FROM user_get_soal WHERE id_user= :id_user AND matpel= :matpel`,
+      {
+        replacements: { id_user: id_user, matpel: matpel },
+        logging: console.log,
+        plain: false,
+        raw: true,
+      }
+    )
+    .catch((error) => res.json({ error: error }));
+  res.json(result[0][0]);
+});

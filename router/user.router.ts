@@ -88,7 +88,7 @@ userRouter.post("/login", (req: Request, res: Response) => {
 userRouter.get("/user/:id", tokenGuard(), (req: Request, res: Response) => {
   User.findOne({
     where: { id: req.params.id },
-    attributes: { exclude: ["password"] },
+    attributes: { exclude: ["password", "point"] },
   }).then((user) => {
     if (user) {
       res.json({ data: user });

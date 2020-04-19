@@ -110,10 +110,18 @@ soalRouter.post("/add", async (req: Request, res: Response) => {
   });
 });
 
-soalRouter.get("/", async (_req: Request, res: Response) => {
-  Soal.findAll().then((soal) => {
-    res.status(200).json({ status: 200, data: soal });
-  });
+soalRouter.get("/all", async (req: Request, res: Response) => {
+  const { matpel } = req.query;
+
+  if (Object.keys(req.query).length !== 0) {
+    Soal.findAll({ where: { matpel: matpel } }).then((soal) =>
+      res.status(200).json({ data: soal })
+    );
+  } else {
+    Soal.findAll().then((soal) => {
+      res.status(200).json({ status: 200, data: soal });
+    });
+  }
 });
 
 soalRouter.delete("/delete/:id", async (req: Request, res: Response) => {

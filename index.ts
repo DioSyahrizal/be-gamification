@@ -11,6 +11,7 @@ import { tokenGuard } from "./middleware/tokenguard";
 import { soalRouter } from "./router/soal.router";
 import { quizRouter } from "./router/quiz.router";
 import { menuRouter } from "./router/menu.router";
+import { leadRouter } from "./router/leaderboard.router";
 
 dotenv.config();
 const app = express();
@@ -34,11 +35,10 @@ app.use("/", userRouter);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(tokenGuard());
-
-// Protected ROUTE
+app.use("/quiz", quizRouter);
+app.use("/leaderboard", leadRouter);
 app.use("/menu", menuRouter);
 app.use("/soal", soalRouter);
-app.use("/quiz", quizRouter);
 
 app.listen(port, () => {
   console.log(`server running at port ${port}`);
