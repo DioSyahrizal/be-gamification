@@ -3,7 +3,6 @@ import { pusher } from "..";
 import { BadgeUser } from "../models/badge_user";
 
 export const triggerSoalBadge = (id_user: string) => {
-  //badge jawaban benar 1
   BadgeUser.findAll({ where: { id_user: id_user, id_badge: 1 } }).then(
     (badge) => {
       if (badge.length === 0) {
@@ -51,6 +50,49 @@ export const triggerSoalBadge = (id_user: string) => {
             }
           }
         );
+      }
+    }
+  );
+};
+
+export const triggerLevel = (
+  id_user: string,
+  level: string,
+  matpel: string
+) => {
+  BadgeUser.findAll({ where: { id_user: id_user, id_badge: 4 } }).then(
+    (badge) => {
+      if (badge.length === 0) {
+        BadgeUser.create({ id_user: id_user, id_badge: 4 });
+        pusher.trigger("badge", "triggerBadge", {
+          message: "First Badge!",
+        });
+      }
+    }
+  );
+
+  BadgeUser.findAll({ where: { id_user: id_user, id_badge: 5 } }).then(
+    (badge) => {
+      if (badge.length === 0) {
+        if (level === "Hard" && matpel === "fisika") {
+          BadgeUser.create({ id_user: id_user, id_badge: 5 });
+          pusher.trigger("badge", "triggerBadge", {
+            message: "Physician Badge!",
+          });
+        }
+      }
+    }
+  );
+
+  BadgeUser.findAll({ where: { id_user: id_user, id_badge: 6 } }).then(
+    (badge) => {
+      if (badge.length === 0) {
+        if (level === "Hard" && matpel === "kimia") {
+          BadgeUser.create({ id_user: id_user, id_badge: 6 });
+          pusher.trigger("badge", "triggerBadge", {
+            message: "Chemist’s Badges",
+          });
+        }
       }
     }
   );
