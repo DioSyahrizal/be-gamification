@@ -19,7 +19,7 @@ export class User extends Model {
   public email!: string;
   public password!: string;
   public address!: string;
-  public point!: string;
+  public point!: number;
   public role!: string;
 }
 
@@ -27,7 +27,7 @@ User.init(
   {
     id: {
       type: Sequelize.STRING,
-      primaryKey: true
+      primaryKey: true,
     },
     name: Sequelize.STRING,
     username: Sequelize.STRING,
@@ -37,8 +37,8 @@ User.init(
     point: Sequelize.BIGINT,
     role: {
       type: Sequelize.ENUM,
-      values: ["user", "admin"]
-    }
+      values: ["user", "admin"],
+    },
   },
   { sequelize, tableName: "users", timestamps: false }
 );

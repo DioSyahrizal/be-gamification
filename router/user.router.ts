@@ -7,6 +7,7 @@ import { validationResult } from "express-validator/check";
 import { User } from "../models/users";
 import { Coin } from "../models/coin";
 import { tokenGuard } from "../middleware/tokenguard";
+import { ItemUser } from "../models/item_user";
 
 export const userRouter = Router();
 
@@ -40,6 +41,12 @@ userRouter.post("/register", async (req: Request, res: Response) => {
               role: "user",
             }).then((u) => {
               console.dir(u);
+              ItemUser.create({
+                id_user: u.id,
+                id_item: 1,
+                quantity: 0,
+                spent: 0,
+              });
               res.status(200).json({ status: 200, success: true });
             });
           });

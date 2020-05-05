@@ -12,7 +12,7 @@ import { soalRouter } from "./router/soal.router";
 import { quizRouter } from "./router/quiz.router";
 import { menuRouter } from "./router/menu.router";
 import { leadRouter } from "./router/leaderboard.router";
-
+import { itemRouter } from "./router/item.router";
 dotenv.config();
 const app = express();
 
@@ -39,6 +39,7 @@ app.use("/quiz", quizRouter);
 app.use("/leaderboard", leadRouter);
 app.use("/menu", menuRouter);
 app.use("/soal", soalRouter);
+app.use("/item", itemRouter);
 
 app.listen(port, () => {
   console.log(`server running at port ${port}`);
