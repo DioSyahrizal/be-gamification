@@ -4,6 +4,7 @@ import { User } from "../models/users";
 
 export const itemRouter = Router();
 
+//get kunci
 itemRouter.get("/kunci/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   ItemUser.findOne({ where: { id_user: id } }).then((item) => {
