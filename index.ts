@@ -13,6 +13,9 @@ import { quizRouter } from "./router/quiz.router";
 import { menuRouter } from "./router/menu.router";
 import { leadRouter } from "./router/leaderboard.router";
 import { itemRouter } from "./router/item.router";
+import { controlRouter } from "./router/control.router";
+import { badgeRouter } from "./router/badge.router";
+
 dotenv.config();
 const app = express();
 
@@ -38,8 +41,12 @@ app.use(tokenGuard());
 app.use("/quiz", quizRouter);
 app.use("/leaderboard", leadRouter);
 app.use("/menu", menuRouter);
-app.use("/soal", soalRouter);
 app.use("/item", itemRouter);
+app.use("/badge", badgeRouter);
+
+// admin
+app.use("/soal", soalRouter);
+app.use("/control", controlRouter);
 
 app.listen(port, () => {
   console.log(`server running at port ${port}`);
