@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { ItemUser } from "../models/item_user";
 import { User } from "../models/users";
+import { triggerItem } from "../utils/checkBadge";
 
 export const itemRouter = Router();
 
@@ -49,7 +50,10 @@ itemRouter.put("/use", async (req: Request, res: Response) => {
         ItemUser.update(
           { quantity: newQuantity, spent: newSpent },
           { where: { id_user: id_user } }
-        ).then((_item) => res.status(200).json({ status: "Item Used!" }));
+        ).then((_item) => {
+          triggerItem(id_user);
+          res.status(200).json({ status: "Item Used!" });
+        });
       } else {
         res.status(422).json({ status: "Item habis!" });
       }

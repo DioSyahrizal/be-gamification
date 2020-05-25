@@ -1,6 +1,7 @@
 import { UserSoal } from "../models/users_soal";
 import { pusher } from "..";
 import { BadgeUser } from "../models/badge_user";
+import { ItemUser } from "../models/item_user";
 
 export const triggerSoalBadge = (id_user: string) => {
   BadgeUser.findAll({ where: { id_user: id_user, id_badge: 1 } }).then(
@@ -93,6 +94,23 @@ export const triggerLevel = (
             message: "Chemist’s Badges",
           });
         }
+      }
+    }
+  );
+};
+
+export const triggerItem = (id_user: string) => {
+  BadgeUser.findAll({ where: { id_user: id_user, id_badge: 7 } }).then(
+    (badge) => {
+      if (badge.length === 0) {
+        ItemUser.findOne({ where: { id_user: id_user } }).then((item) => {
+          if (item !== null && item.spent === 3) {
+            BadgeUser.create({ id_user: id_user, id_badge: 7 });
+            pusher.trigger("badge", "triggerBadge", {
+              message: "Item Collector Badges",
+            });
+          }
+        });
       }
     }
   );
