@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { sequelize } from "../utils/db";
+import { Badge } from "../models/badge";
 
 export const badgeRouter = Router();
 
@@ -18,4 +19,10 @@ badgeRouter.get("/user/:id", async (req: Request, res: Response) => {
     .catch((error) => res.json({ error: error }));
 
   res.status(200).json(result[0]);
+});
+
+badgeRouter.get("/all", async (_req: Request, res: Response) => {
+  Badge.findAll().then((badge) => {
+    res.status(200).json({ badge });
+  });
 });
