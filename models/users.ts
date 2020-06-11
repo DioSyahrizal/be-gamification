@@ -20,6 +20,7 @@ export class User extends Model {
   public password!: string;
   public address!: string;
   public point!: number;
+  public coin!: number;
   public role!: string;
 }
 
@@ -35,6 +36,7 @@ User.init(
     password: Sequelize.STRING,
     address: Sequelize.TEXT,
     point: Sequelize.BIGINT,
+    coin: Sequelize.BIGINT,
     role: {
       type: Sequelize.ENUM,
       values: ["user", "admin"],
