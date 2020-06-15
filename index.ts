@@ -15,6 +15,7 @@ import { leadRouter } from "./router/leaderboard.router";
 import { itemRouter } from "./router/item.router";
 import { controlRouter } from "./router/control.router";
 import { badgeRouter } from "./router/badge.router";
+import { questRouter } from "./router/quest.router";
 
 dotenv.config();
 const app = express();
@@ -47,6 +48,7 @@ app.use("/badge", badgeRouter);
 // admin
 app.use("/soal", soalRouter);
 app.use("/control", controlRouter);
+app.use("/quest", questRouter);
 
 app.listen(port, () => {
   console.log(`server running at port ${port}`);

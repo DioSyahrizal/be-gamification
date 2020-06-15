@@ -8,9 +8,9 @@ import { triggerSoalBadge } from "../utils/checkBadge";
 import { Hasil } from "../models/hasil";
 import { addScore } from "../utils/countScore";
 
-export const quizRouter = Router();
+export const questRouter = Router();
 
-quizRouter.post("/generate", async (req: Request, res: Response) => {
+questRouter.post("/generate", async (req: Request, res: Response) => {
   const { id_user } = req.body;
   const matpel = "quest";
 
@@ -49,7 +49,7 @@ quizRouter.post("/generate", async (req: Request, res: Response) => {
   });
 });
 
-quizRouter.get("/soal/", async (req: Request, res: Response) => {
+questRouter.get("/soal/", async (req: Request, res: Response) => {
   const { id_user } = req.query;
   const matpel = "quest";
   const result: any = await sequelize
@@ -67,7 +67,7 @@ quizRouter.get("/soal/", async (req: Request, res: Response) => {
   res.json({ data: result[0] });
 });
 
-quizRouter.get("/soal/:id", async (req: Request, res: Response) => {
+questRouter.get("/soal/:id", async (req: Request, res: Response) => {
   const { id_user } = req.query;
   const matpel = "quest";
   const { id } = req.params;
@@ -86,7 +86,7 @@ quizRouter.get("/soal/:id", async (req: Request, res: Response) => {
   res.json({ data: result[0][id] });
 });
 
-quizRouter.put("/correction/", async (req: Request, res: Response) => {
+questRouter.put("/correction/", async (req: Request, res: Response) => {
   // FIXME: penyesuaian quest
   const { id, id_soaluser, answer, id_user } = req.body;
 
@@ -106,7 +106,7 @@ quizRouter.put("/correction/", async (req: Request, res: Response) => {
   });
 });
 
-quizRouter.post("/score", async (req: Request, res: Response) => {
+questRouter.post("/score", async (req: Request, res: Response) => {
   // FIXME: Penyesuaian score quest
   const { id_user, matpel } = req.body;
   let multiple: number;
@@ -134,14 +134,14 @@ quizRouter.post("/score", async (req: Request, res: Response) => {
   });
 });
 
-quizRouter.get("/answer", async (req: Request, res: Response) => {
+questRouter.get("/answer", async (req: Request, res: Response) => {
   const { id } = req.query;
   Soal.findOne({ where: { id: id }, attributes: ["answer"] }).then((soal) =>
     res.status(200).json(soal)
   );
 });
 
-quizRouter.get("/progress", async (req: Request, res: Response) => {
+questRouter.get("/progress", async (req: Request, res: Response) => {
   // FIXME: Add Progress? Hmm
   const { id_user, matpel } = req.query;
 
@@ -160,4 +160,30 @@ quizRouter.get("/progress", async (req: Request, res: Response) => {
     )
     .catch((error) => res.json({ error: error }));
   res.json(result[0][0]);
+});
+
+//ADMIN PAGE
+
+questRouter.post("/add", (req: Request, res: Response) => {
+  const { question, opt1, opt2, opt3, opt4, answer, profileImg } = req.body;
+  Soal.create({
+    question: question,
+    opt1: opt1,
+    opt2: opt2,
+    opt3: opt3,
+    opt4: opt4,
+    answer: answer,
+    matpel: "quest",
+    image: profileImg,
+  })
+    .then((create) => res.status(200).json({ status: "success", data: create }))
+    .catch((err) => {
+      res.status(500).json({ erorrs: err });
+    });
+});
+
+questRouter.get("/all", async (_req: Request, res: Response) => {
+  Soal.findAll({ where: { matpel: "quest" } }).then((soal) => {
+    res.status(200).json({ status: 200, data: soal });
+  });
 });
