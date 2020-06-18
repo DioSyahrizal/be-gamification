@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
 import Pusher from "pusher";
+import cron from "node-cron";
 
 import swaggerDocument from "./swagger";
 import { userRouter } from "./router/user.router";
@@ -49,6 +50,10 @@ app.use("/badge", badgeRouter);
 app.use("/soal", soalRouter);
 app.use("/control", controlRouter);
 app.use("/quest", questRouter);
+
+cron.schedule("1 * * * * *", () => {
+  console.dir("running a task every minute");
+});
 
 app.listen(port, () => {
   console.log(`server running at port ${port}`);
