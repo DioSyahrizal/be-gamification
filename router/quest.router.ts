@@ -118,7 +118,7 @@ questRouter.get("/progress", async (req: Request, res: Response) => {
 
   const result: any = await sequelize
     .query(
-      `SELECT SUM(IF(result IS NOT NULL AND matpel = 'quest' ,1,0)) as quest,
+      `SELECT SUM(IF(result IS NOT NULL AND matpel = 'quest' ,1,0)) as quest
                FROM user_get_soal WHERE id_user= :id_user`,
       {
         replacements: { id_user: id_user },

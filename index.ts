@@ -17,6 +17,7 @@ import { itemRouter } from "./router/item.router";
 import { controlRouter } from "./router/control.router";
 import { badgeRouter } from "./router/badge.router";
 import { questRouter } from "./router/quest.router";
+import { UserSoal } from "./models/users_soal";
 
 dotenv.config();
 const app = express();
@@ -51,9 +52,16 @@ app.use("/soal", soalRouter);
 app.use("/control", controlRouter);
 app.use("/quest", questRouter);
 
-cron.schedule("1 * * * * *", () => {
-  console.dir("running a task every minute");
-});
+//rule pembukaan quest
+cron.schedule(
+  "38 21 * * 5",
+  () => {
+    UserSoal.destroy({ where: { matpel: "quest" } }).then((_res) =>
+      console.dir("delete quest")
+    );
+  },
+  { scheduled: true, timezone: "Asia/Jakarta" }
+);
 
 app.listen(port, () => {
   console.log(`server running at port ${port}`);
