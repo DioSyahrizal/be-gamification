@@ -18,12 +18,12 @@ menuRouter.put("/unlock/fisika/:diff", async (req: Request, res: Response) => {
   switch (diff) {
     case "medium":
       coinSpent = 1000;
-      diamondSpent = 200;
+      diamondSpent = 300;
       break;
 
     case "hard":
       coinSpent = 2000;
-      diamondSpent = 500;
+      diamondSpent = 600;
       break;
 
     default:
@@ -81,7 +81,7 @@ menuRouter.put("/unlock/fisika/:diff", async (req: Request, res: Response) => {
     Coin.findOne({ where: { id: id_user } }).then((data) => {
       const diamond_user = data ? data.coin : 0;
       const diamond = diamond_user - diamondSpent;
-      console.dir(diamond);
+
       if (diamond >= 0) {
         if (diff === "medium") {
           Coin.update({ coin: diamond }, { where: { id: id_user } }).then(
@@ -132,12 +132,12 @@ menuRouter.put("/unlock/kimia/:diff", async (req: Request, res: Response) => {
   switch (diff) {
     case "medium":
       coinSpent = 1000;
-      diamondSpent = 200;
+      diamondSpent = 300;
       break;
 
     case "hard":
       coinSpent = 2000;
-      diamondSpent = 500;
+      diamondSpent = 600;
       break;
 
     default:
@@ -195,7 +195,7 @@ menuRouter.put("/unlock/kimia/:diff", async (req: Request, res: Response) => {
     Coin.findOne({ where: { id: id_user } }).then((data) => {
       const diamond_user = data ? data.coin : 0;
       const diamond = diamond_user - diamondSpent;
-      console.dir(diamond);
+
       if (diamond >= 0) {
         if (diff === "medium") {
           Coin.update({ coin: diamond }, { where: { id: id_user } }).then(

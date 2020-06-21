@@ -97,7 +97,7 @@ questRouter.put("/correction", async (req: Request, res: Response) => {
     }
     UserSoal.update({ result: result }, { where: { id: id_soaluser } })
       .then((_updated) => {
-        const score = result === "true" ? 600 : 0;
+        const score = result === "true" ? 100 : 0;
         addCoin(id_user, score);
         res.status(200).json({ hasil: result });
       })
