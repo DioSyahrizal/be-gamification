@@ -18,12 +18,27 @@ quizRouter.post("/generate", async (req: Request, res: Response) => {
     where: { id_user: id_user, level: level, matpel: matpel },
   }).then(async (counter) => {
     if (counter === 0) {
+      let limit: number;
+      switch (level) {
+        case "Easy":
+          limit = 10;
+          break;
+        case "Medium":
+          limit = 10;
+          break;
+        case "Hard":
+          limit = 5;
+          break;
+        default:
+          limit = 0;
+          break;
+      }
       //Menambahkan soal secara random
       Soal.findAll({
         attributes: ["id", "matpel", "level"],
         where: { level: level, matpel: matpel },
         order: [Sequelize.fn("rand")],
-        limit: 5,
+        limit: limit,
       }).then(async (soalUser) => {
         //desctructuring
         const resObj = soalUser.map((soal) => {

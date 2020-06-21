@@ -37,7 +37,8 @@ userRouter.post("/register", async (req: Request, res: Response) => {
               email,
               password: hash,
               address,
-              point: 6000,
+              point: 1500,
+              coin: 200,
               role: "user",
             }).then((u) => {
               console.dir(u);

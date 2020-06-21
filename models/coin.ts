@@ -4,6 +4,7 @@ import { sequelize } from "../utils/db";
 export class Coin extends Model {
   public id!: string;
   public point!: number;
+  public coin!: number;
 }
 
 Coin.init(
@@ -13,7 +14,9 @@ Coin.init(
       primaryKey: true,
     },
     point: Sequelize.BIGINT,
+    coin: Sequelize.BIGINT,
   },
+
   { sequelize, tableName: "users", timestamps: false }
 );
 
