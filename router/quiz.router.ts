@@ -4,7 +4,11 @@ import { UserSoal } from "../models/users_soal";
 import { Sequelize } from "sequelize";
 import { Soal } from "../models/soals";
 import { sequelize } from "../utils/db";
-import { triggerSoalBadge, triggerLevel } from "../utils/checkBadge";
+import {
+  triggerSoalBadge,
+  triggerLevel,
+  triggerKunciNone,
+} from "../utils/checkBadge";
 import { Hasil } from "../models/hasil";
 import { addScore } from "../utils/countScore";
 
@@ -151,6 +155,7 @@ quizRouter.post("/score", async (req: Request, res: Response) => {
         }).then((_hasil) => res.status(200).json({ score: score }));
         addScore(id_user, score);
         triggerLevel(id_user, level, matpel);
+        triggerKunciNone(id_user);
       } else {
         res.status(200).json({ status: "Already submitted" });
       }

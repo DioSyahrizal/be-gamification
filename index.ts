@@ -54,7 +54,7 @@ app.use("/quest", questRouter);
 
 //rule pembukaan quest
 cron.schedule(
-  "38 21 * * 5",
+  "01 00 * * Tuesday,Thursday",
   () => {
     UserSoal.destroy({ where: { matpel: "quest" } }).then((_res) =>
       console.dir("delete quest")

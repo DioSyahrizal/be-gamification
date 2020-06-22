@@ -22,6 +22,7 @@ export class User extends Model {
   public point!: number;
   public coin!: number;
   public role!: string;
+  public questcounter!: number;
 }
 
 User.init(
@@ -41,7 +42,9 @@ User.init(
       type: Sequelize.ENUM,
       values: ["user", "admin"],
     },
+    questcounter: Sequelize.BIGINT,
   },
+
   { sequelize, tableName: "users", timestamps: false }
 );
 

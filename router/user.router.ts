@@ -40,6 +40,7 @@ userRouter.post("/register", async (req: Request, res: Response) => {
               point: 1500,
               coin: 200,
               role: "user",
+              questcounter: 0,
             }).then((u) => {
               console.dir(u);
               ItemUser.create({

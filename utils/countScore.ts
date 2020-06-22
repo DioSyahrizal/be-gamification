@@ -18,3 +18,13 @@ export const addCoin = (id_user: string, score: number) => {
     );
   });
 };
+
+export const addCountQuest = (id_user: string) => {
+  User.findOne({ where: { id: id_user } }).then((data) => {
+    const counter = data && data.questcounter + 1;
+    User.update(
+      { questcounter: counter },
+      { where: { id: id_user } }
+    ).then((data) => console.dir(data));
+  });
+};

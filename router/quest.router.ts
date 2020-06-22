@@ -5,7 +5,8 @@ import { Sequelize } from "sequelize";
 import { Soal } from "../models/soals";
 import { sequelize } from "../utils/db";
 
-import { addCoin } from "../utils/countScore";
+import { addCoin, addCountQuest } from "../utils/countScore";
+import { triggerQuest } from "../utils/checkBadge";
 
 export const questRouter = Router();
 
@@ -99,6 +100,8 @@ questRouter.put("/correction", async (req: Request, res: Response) => {
       .then((_updated) => {
         const score = result === "true" ? 100 : 0;
         addCoin(id_user, score);
+        result === "true" ? addCountQuest(id_user) : null;
+        triggerQuest(id_user);
         res.status(200).json({ hasil: result });
       })
       .catch((error) => res.json({ error: error }));
