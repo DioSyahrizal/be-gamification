@@ -24,7 +24,7 @@ questRouter.post("/generate", async (req: Request, res: Response) => {
         attributes: ["id", "matpel"],
         where: { matpel: matpel },
         order: [Sequelize.fn("rand")],
-        limit: 5,
+        limit: 10,
       }).then(async (soalUser) => {
         //desctructuring
         const resObj = soalUser.map((soal) => {
