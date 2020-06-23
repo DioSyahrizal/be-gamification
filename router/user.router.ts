@@ -19,7 +19,7 @@ userRouter.post("/register", async (req: Request, res: Response) => {
 
   if (!errors.isEmpty()) res.status(422).json(errors.array());
 
-  const { email, password, username, name, address } = req.body;
+  const { email, password, username, name, address, sekolah, nohp } = req.body;
 
   User.findOne({ where: { email } }).then((u) => {
     if (u !== null) {
@@ -41,6 +41,8 @@ userRouter.post("/register", async (req: Request, res: Response) => {
               coin: 200,
               role: "user",
               questcounter: 0,
+              sekolah,
+              nohp,
             }).then((u) => {
               console.dir(u);
               ItemUser.create({

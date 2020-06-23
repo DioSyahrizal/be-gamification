@@ -23,6 +23,8 @@ export class User extends Model {
   public coin!: number;
   public role!: string;
   public questcounter!: number;
+  public sekolah!: string;
+  public nohp!: string;
 }
 
 User.init(
@@ -43,6 +45,8 @@ User.init(
       values: ["user", "admin"],
     },
     questcounter: Sequelize.BIGINT,
+    sekolah: Sequelize.STRING,
+    nohp: Sequelize.STRING,
   },
 
   { sequelize, tableName: "users", timestamps: false }
