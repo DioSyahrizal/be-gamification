@@ -116,10 +116,10 @@ soalRouter.get("/all", async (req: Request, res: Response) => {
 
   if (Object.keys(req.query).length !== 0) {
     Soal.findAll({
-      where: { matpel: matpel, level: { [Op.not]: "quest" } },
+      where: { matpel: matpel },
     }).then((soal) => res.status(200).json({ data: soal }));
   } else {
-    Soal.findAll({ where: { level: { [Op.not]: "quest" } } }).then((soal) => {
+    Soal.findAll({ where: { matpel: { [Op.not]: "quest" } } }).then((soal) => {
       res.status(200).json({ status: 200, data: soal });
     });
   }
