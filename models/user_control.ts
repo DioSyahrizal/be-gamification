@@ -8,6 +8,8 @@ export class UserControl extends Model {
   public email!: string;
   public address!: string;
   public point!: number;
+  public coin!: number;
+  public nohp!: string;
   public fis_med!: string;
   public fis_hard!: string;
   public kim_med!: string;
@@ -25,6 +27,8 @@ UserControl.init(
     email: Sequelize.STRING,
     address: Sequelize.TEXT,
     point: Sequelize.BIGINT,
+    coin: Sequelize.BIGINT,
+    nohp: Sequelize.STRING,
     fis_med: {
       type: Sequelize.ENUM,
       values: ["lock", "open"],

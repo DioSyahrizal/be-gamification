@@ -30,7 +30,7 @@ controlRouter.get("/user", async (_req: Request, res: Response) => {
 });
 
 controlRouter.put("/user", async (req: Request, res: Response) => {
-  const { id, username, name, email, address, point } = req.body;
+  const { id, username, name, email, address, point, coin, nohp } = req.body;
   UserControl.update(
     {
       username: username,
@@ -38,6 +38,8 @@ controlRouter.put("/user", async (req: Request, res: Response) => {
       email: email,
       address: address,
       point: point,
+      coin: coin,
+      nohp: nohp,
     },
     { where: { id: id } }
   ).then((_user) => {
