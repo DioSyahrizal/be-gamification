@@ -189,3 +189,14 @@ quizRouter.get("/progress", async (req: Request, res: Response) => {
     .catch((error) => res.json({ error: error }));
   res.json(result[0][0]);
 });
+
+quizRouter.post("/timeout", async (req: Request, res: Response) => {
+  const { id_user, matpel, level } = req.body;
+
+  UserSoal.update(
+    { result: "false" },
+    { where: { id_user, matpel, level, result: null } }
+  )
+    .then((_res) => res.status(200).json({ status: "Timeout" }))
+    .catch((err) => res.json({ error: err }));
+});
