@@ -1,6 +1,6 @@
 {
   "name": "be-gamification",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Backu Endo for My Exit Ticket",
   "main": "index.js",
   "scripts": {
